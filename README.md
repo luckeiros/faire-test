@@ -1,6 +1,13 @@
-# faire-test
+# Weather
 
---------------------------------- Repository Pattern ---------------------------------------------
+## Project Goal
+
+The app provides real-time weather information. Users can access current weather conditions, daily
+and hourly forecasts, and other weather-related data, all in one convenient location. The goal of
+the app is to provide users with accurate and up-to-date weather information, making it easier for
+them to plan their daily activities and stay informed about weather conditions in their area.
+
+## Repository Pattern
 
 The WeatherRepositoryImpl class implements the WeatherRepository interface, which is an example of
 the repository pattern. This pattern helps to separate the data access logic from the rest of the
@@ -16,7 +23,7 @@ Overall, the use of the repository pattern and the WeatherRepositoryImpl class p
 flexible way to access weather data, improving the maintainability and testability of the
 application.
 
--------------------------------------- API Service -------------------------------------------------
+## API Service
 
 The WeatherService interface provides a convenient way to access weather data from a remote source.
 It utilizes the Retrofit library, which makes it easy to send network requests and handle responses.
@@ -32,7 +39,7 @@ thread to continue running, making the application more responsive.
 In summary, the WeatherService interface provides a straightforward way to access weather data,
 taking advantage of the Retrofit library and the asynchronous capabilities of the Kotlin language.
 
---------------------------------- Dependency Injection ---------------------------------------------
+## Dependency Injection
 
 The WeatherModule is a crucial part of the application's architecture, responsible for managing the
 dependencies between different components. By using the Koin library, we can define the module and
@@ -55,7 +62,7 @@ In summary, the WeatherModule is an essential component of the application, prov
 and organized way to manage dependencies between different parts of the code. This makes the code
 more maintainable and easier to change in the future.
 
------------------------------------------ Model ----------------------------------------------------
+## Model
 
 In this part of the architecture, we are defining some data classes and functions that are used to
 map between different representations of weather information.
@@ -76,7 +83,7 @@ WeatherInfo object, which contains additional information about the current and 
 This mapping and conversion of weather information allows us to work with the information in a more
 manageable format, making it easier to display and manipulate the data as needed.
 
---------------------------------- Connectivity Management ------------------------------------------
+## Connectivity Management
 
 The StandardConnectivityManager class serves as an implementation of the ConnectivityManager
 interface. It provides a simple way to check if there is an active internet connection by using the
@@ -85,7 +92,7 @@ network information from the ConnectivityManager service is connected or not, an
 accordingly. This allows the app to determine if a network connection is available for making API
 requests and handling data accordingly.
 
--------------------------------------- Coroutines --------------------------------------------------
+## Kotlin Coroutines
 
 The CoroutineScopeExt is used as a convenient helper method for launching coroutines within a
 ViewModel while handling exceptions. The function safeLaunch can be called within the scope of a
@@ -104,7 +111,7 @@ request. Furthermore, the use of Coroutines makes the code more readable and eas
 it eliminates the need for callbacks and nested callbacks, making it easier to see the flow of the
 code.
 
------------------------------------- Feedback Builder ----------------------------------------------
+## Feedback Builder
 
 The Feedback class uses a builder pattern to create its instances. The builder pattern is a design
 pattern that allows for creating objects step by step. In this case, the Feedback class has a
@@ -117,7 +124,7 @@ a clean and readable syntax, as the object construction is separated from the ob
 Finally, it promotes immutability, since once the object is created, its properties cannot be
 changed.
 
---------------------------------------- LiveData ---------------------------------------------------
+## LiveData
 
 The LiveDataExt defines two functions that allow you to interact with a LiveData object in a more
 concise and intuitive way. The first function, observe, enables you to observe changes to a LiveData
@@ -138,7 +145,7 @@ with the recommended best practices for working with LiveData.
 By using these functions, you can make your code more readable and maintainable, which can help
 improve your overall development experience.
 
---------------------------------------- ViewModel --------------------------------------------------
+## ViewModel
 
 The WeatherViewModel class is used to manage the weather information in the app. By using a
 ViewModel, the data can survive configuration changes and be kept separate from the UI.
@@ -151,7 +158,7 @@ weather data fetch.
 In summary, the WeatherViewModel class provides a centralized and organized way to manage the
 weather information and its state, while allowing the UI to stay up to date.
 
---------------------------------------- ViewState --------------------------------------------------
+## ViewState
 
 I created a sealed class called WeatherViewState that models the different states that a weather
 view can be in. By using a sealed class, we're able to define a fixed set of possible states that
@@ -165,7 +172,7 @@ the state would include information about the error in the form of a Throwable o
 would be NetworkError. And if the weather data is successfully loaded, the state would be Success
 and include the loaded WeatherInfo data.
 
---------------------------------------- Error Handling ---------------------------------------------
+## Error Handling
 
 The ErrorHandlerExt contains two functions that enhance the functionality of the Feedback.Builder
 class. By using extension functions, we're able to add new behavior to the class without having to
@@ -182,7 +189,7 @@ By encapsulating the process of setting the title and message, we're able to sim
 make it more readable and maintainable. These functions provide a clear and concise way to handle
 different error scenarios in the app.
 
---------------------------------------- FeedbackView -----------------------------------------------
+## Custom View
 
 The FeedbackView is a custom View that extends the ConstraintLayout class. The purpose of this class
 is to display feedback data in a specific format.
@@ -206,5 +213,41 @@ the Feedback Builder treats the data. It provides a clean and organized way to d
 in a specific format, allowing for easy reuse and customization of the feedback display in the
 future.
 
+## View Handling
 
+The ViewExt provides a collection of extension functions that make it easier to interact with View
+objects. These functions are extensions of the View class and can be used with any instance of View.
 
+turnGone and turnVisible: These functions provide a simple way to control the visibility of a View
+object. They make it easier to toggle the visibility of a View by reducing the amount of code
+needed.
+
+toDecimalString: This function formats a Double number into a string representation, based on the
+format specified in a string resource. This function helps to ensure that numbers are displayed
+consistently throughout the application, making it easier to maintain a consistent look and feel.
+
+loadIcon: This function provides a simple way to load an image from the web using the Glide library.
+It takes in a Context, an iconState string, and an ImageView, and uses Glide to load the image
+specified by the iconState string into the ImageView.
+
+getDayName: This function takes in a string representation of a date and returns the name of the day
+of the week for that date. The function uses the SimpleDateFormat class to parse the date string and
+the Calendar class to determine the name of the day of the week. This function makes it easier to
+display dates in a user-friendly format.
+
+## Presentation
+
+The presentation layer consists of two classes, WeatherActivity and WeatherFragment.
+
+The WeatherActivity is responsible for displaying the WeatherFragment when the app starts. It opens
+the WeatherFragment by calling the openWeatherFragment method from the ViewExt.
+
+The WeatherFragment displays the weather information and interacts with the user. It uses the
+WeatherViewModel class to load the weather information and then displays it to the user by updating
+the corresponding views in the layout. The views are defined in a binding class
+FragmentWeatherBinding. The weather information is displayed by setting the city name, today's
+weather information, tomorrow's weather information, and the consolidated weather information in a
+recycler view. The fragment also provides feedback to the user in case of errors while loading the
+weather information. To make sure that the views in the fragment are updated when the data in the
+WeatherViewModel changes, the fragment uses the observeStates method to observe the state of the
+view data and update the views accordingly.
