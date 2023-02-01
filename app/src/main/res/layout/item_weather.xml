@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/cvWeather"
+        app:layout_constraintStart_toStartOf="@+id/cvWeather"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Monday" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvWeather"
+        android:layout_width="@dimen/custom_card_view_measure"
+        android:layout_height="@dimen/custom_card_view_measure"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/min_medium_margin"
+        android:layout_marginEnd="@dimen/min_medium_margin"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:backgroundTint="@color/grey_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDay">
+
+        <TextView
+            android:id="@+id/tvWeatherState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/min_medium_margin"
+            android:textColor="@color/white"
+            tools:text="Light Rain" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:id="@+id/icWeather"
+        android:layout_width="@dimen/custom_item_icon_measure"
+        android:layout_height="@dimen/custom_item_icon_measure"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:contentDescription="@string/ic_weather_description"
+        android:elevation="@dimen/elevation"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/cvWeather"
+        tools:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/tvTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/min_medium_margin"
+        android:elevation="@dimen/elevation"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_text"
+        app:layout_constraintBottom_toBottomOf="@+id/icWeather"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/icWeather"
+        tools:text="18º" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- view -->
+    <dimen name="elevation">2dp</dimen>
+    <dimen name="match_constraint">0dp</dimen>
+
+    <dimen name="min_margin">2dp</dimen>
+    <dimen name="min_medium_margin">4dp</dimen>
     <dimen name="small_margin">8dp</dimen>
+    <dimen name="medium_margin">16dp</dimen>
+    <dimen name="large_margin">32dp</dimen>
+    <dimen name="largest_margin">64dp</dimen>
+
+    <dimen name="custom_item_icon_measure">28dp</dimen>
+    <dimen name="custom_card_view_measure">80dp</dimen>
+
+    <!-- text -->
+    <dimen name="default_text">16sp</dimen>
+
+    <dimen name="small_text">18sp</dimen>
+    <dimen name="small_medium_text">20sp</dimen>
+    <dimen name="medium_text">24sp</dimen>
+    <dimen name="large_text">28sp</dimen>
+
+    <dimen name="custom_temp_text">64sp</dimen>
 </resources>

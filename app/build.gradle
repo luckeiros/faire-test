@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     namespace 'com.lucas.ferreira.faire'
@@ -32,6 +33,11 @@ android {
     viewBinding {
         enabled = true
     }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -58,9 +64,18 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-core:$koin_version"
 
+    /* Glide */
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
     /* Test */
     testImplementation "junit:junit:$junit_version"
-    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "io.insert-koin:koin-test:$koin_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 }

@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.lucas.ferreira.faire.R
 import com.lucas.ferreira.faire.databinding.FragmentWeatherBinding
-import com.lucas.ferreira.faire.feature.weather.common.extension.genericError
-import com.lucas.ferreira.faire.feature.weather.common.extension.networkError
-import com.lucas.ferreira.faire.feature.weather.common.extension.observe
+import com.lucas.ferreira.faire.feature.weather.common.extension.*
 import com.lucas.ferreira.faire.feature.weather.common.feedback.data.Feedback
-import com.lucas.ferreira.faire.feature.weather.common.feedback.view.FeedbackView
-import com.lucas.ferreira.faire.feature.weather.model.Weather
+import com.lucas.ferreira.faire.feature.weather.view.adapter.WeatherAdapter
+import com.lucas.ferreira.faire.feature.weather.view.item.WeatherInfo
 import com.lucas.ferreira.faire.feature.weather.viewmodel.WeatherViewModel
 import com.lucas.ferreira.faire.feature.weather.viewstate.WeatherViewState
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,25 +18,23 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class WeatherFragment : Fragment() {
 
     private val weatherViewModel: WeatherViewModel by viewModel()
-    private var feedbackView: FeedbackView? = null
-    private var tvCity: TextView? = null
+
+    private lateinit var binding: FragmentWeatherBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         weatherViewModel.loadWeather()
         observeStates()
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_weather, container, false)
-        feedbackView = view.findViewById(R.id.feedbackView)
-        tvCity = view.findViewById(R.id.tvCity)
-        return view
+    ): View {
+        binding = FragmentWeatherBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     private fun observeStates() {
@@ -49,24 +43,76 @@ class WeatherFragment : Fragment() {
                 is WeatherViewState.Loading -> showLoading()
                 is WeatherViewState.Error -> showError()
                 is WeatherViewState.NetworkError -> showNetworkError()
-                is WeatherViewState.Success -> showWeatherInfo(state.weather)
+                is WeatherViewState.Success -> showWeatherInfo(state.weatherInfo)
             }
         }
     }
 
-    private fun showWeatherInfo(weather: Weather) {
-        tvCity?.text = weather.title
+    private fun setCity(weatherInfo: WeatherInfo) {
+        binding.tvCity.text = weatherInfo.title
     }
 
-    private fun showNetworkError() {
-        feedbackView?.setFeedback(Feedback.Builder().networkError())
+    private fun setupTodayInfo(weatherInfo: WeatherInfo) {
+        with(binding) {
+            tvTodayTemp.text = weatherInfo.todayInfo.temp.toDecimalString(
+                requireContext(),
+                R.string.label_temperature
+            )
+
+            tvMinTemp.text = weatherInfo.todayInfo.minTemp.toDecimalString(
+                requireContext(),
+                R.string.label_temperature_min
+            )
+
+            tvMaxTemp.text = weatherInfo.todayInfo.maxTemp.toDecimalString(
+                requireContext(),
+                R.string.label_temperature_min
+            )
+
+            tvTodayWeatherState.text = weatherInfo.todayInfo.weatherState
+        }
+
+        loadIcon(requireContext(), weatherInfo.todayInfo.icon, binding.icTodayWeather)
     }
 
-    private fun showError() {
-        feedbackView?.setFeedback(Feedback.Builder().genericError())
+    private fun setupTomorrowInfo(weatherInfo: WeatherInfo) {
+        binding.tvTomorrowTemp.text = weatherInfo.tomorrowInfo.temp.toDecimalString(
+            requireContext(),
+            R.string.label_temperature
+        )
+
+        loadIcon(requireContext(), weatherInfo.tomorrowInfo.icon, binding.icTomorrowWeather)
+    }
+
+    private fun setRecyclerViewData(weatherInfo: WeatherInfo) {
+        binding.rvWeather.adapter =
+            WeatherAdapter(weatherInfo.consolidatedWeather.toMutableList(), requireContext())
     }
 
     private fun showLoading() {
-        Toast.makeText(requireContext(), "mostra o loading", Toast.LENGTH_SHORT).show()
+        binding.groupContent.turnGone()
+        binding.pbWeather.turnVisible()
+    }
+
+    private fun showWeatherInfo(weatherInfo: WeatherInfo) {
+        binding.pbWeather.turnGone()
+        binding.groupContent.turnVisible()
+
+        setCity(weatherInfo)
+        setupTodayInfo(weatherInfo)
+        setupTomorrowInfo(weatherInfo)
+        setRecyclerViewData(weatherInfo)
+    }
+
+    private fun showError() {
+        binding.pbWeather.turnGone()
+        binding.feedbackView.setFeedback(Feedback.Builder().genericError(requireContext()))
+        binding.feedbackView.turnVisible()
+    }
+
+    private fun showNetworkError() {
+        binding.pbWeather.turnGone()
+        binding.feedbackView.setFeedback(Feedback.Builder().networkError(requireContext()))
+        binding.feedbackView.turnVisible()
     }
 }

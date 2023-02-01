@@ -16,5 +16,4 @@ class WeatherRepositoryImpl constructor(
             val service = retrofit.create(WeatherService::class.java)
             service.getWeather().toModel()
         }
-
 }

@@ -4,6 +4,14 @@
     <string name="message_generic_error">Oops! It looks like something went wrong on our end. We\'re sorry for the inconvenience. Please try again later.</string>
     <string name="title_network_error">No Internet Connection</string>
     <string name="message_network_error">It looks like there\'s a problem with your internet connection. Please check and try again.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_today">Today</string>
+    <string name="label_tomorrow">Tomorrow</string>
+    <string name="label_temperature">%.0fº</string>
+    <string name="label_temperature_min">Min: %.0fº</string>
+    <string name="label_temperature_max">Max: %.0fº</string>
+
+    <!-- Accessibility -->
+    <string name="ic_today_description">Today\'s weather icon</string>
+    <string name="ic_tomorrow_description">Tomorrow\'s weather icon</string>
+    <string name="ic_weather_description">Weather day icon</string>
 </resources>
