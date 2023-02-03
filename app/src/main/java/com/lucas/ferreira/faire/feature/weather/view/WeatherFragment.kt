@@ -66,7 +66,7 @@ class WeatherFragment : Fragment() {
 
             tvMaxTemp.text = weatherInfo.todayInfo.maxTemp.toDecimalString(
                 requireContext(),
-                R.string.label_temperature_min
+                R.string.label_temperature_max
             )
 
             tvTodayWeatherState.text = weatherInfo.todayInfo.weatherState
